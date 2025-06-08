@@ -12,4 +12,6 @@
 # Obsolete files
 *.lock
 *.log
+# ide
+.idea
 ```
