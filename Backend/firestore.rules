@@ -1,0 +1,37 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    // Users can read/write their own profile
+    match /users/{userId} {
+      allow read, write: if request.auth != null && request.auth.uid == userId;
+      allow read: if request.auth != null && resource.data.isPublic == true;
+    }
+    
+    // Golf rounds - users can read/write their own rounds
+    match /rounds/{roundId} {
+      allow read, write: if request.auth != null && request.auth.uid == resource.data.userId;
+      allow read: if request.auth != null && 
+        exists(/databases/$(database)/documents/friendships/$(getFriendshipDoc(request.auth.uid, resource.data.userId)));
+      allow create: if request.auth != null && request.auth.uid == request.resource.data.userId;
+    }
+    
+    // Friendships - users can manage their own friendships
+    match /friendships/{friendshipId} {
+      allow read, write: if request.auth != null && 
+        (request.auth.uid == resource.data.userId1 || request.auth.uid == resource.data.userId2);
+      allow create: if request.auth != null && 
+        (request.auth.uid == request.resource.data.userId1 || request.auth.uid == request.resource.data.userId2);
+    }
+    
+    // Golf courses - read for all authenticated users
+    match /courses/{courseId} {
+      allow read: if request.auth != null;
+      allow write: if request.auth != null; // Can be restricted to admins later
+    }
+    
+    // Helper function to get friendship document ID
+    function getFriendshipDoc(userId1, userId2) {
+      return userId1 < userId2 ? userId1 + '_' + userId2 : userId2 + '_' + userId1;
+    }
+  }
+}
