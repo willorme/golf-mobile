@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "616311737683",
+    "project_id": "golf-mobile-backend",
+    "storage_bucket": "golf-mobile-backend.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:616311737683:android:695aa5a3e8cc30cb8c25a6",
+        "android_client_info": {
+          "package_name": "com.example.golf_mobile_frontend"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDzIPpiwify7tWoBTYAmCq9X6ncFOEVfdk"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
